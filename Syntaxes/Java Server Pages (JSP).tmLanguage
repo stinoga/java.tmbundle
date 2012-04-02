@@ -5,6 +5,8 @@
 	<key>fileTypes</key>
 	<array>
 		<string>jsp</string>
+		<string>jspf</string>
+		<string>tag</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>/\*\*|\{\s*$</string>
@@ -146,6 +148,60 @@
 				</dict>
 			</array>
 		</dict>
+
+		<!-- Targeting all of the JSP tags/attributes separately; This should let us color them however we want -->
+		<dict>
+			<!-- Start by targeting all alphanumeric tags with colons in them -->
+			<key>begin</key>
+			<string>(&lt;/?)([a-zA-Z0-9]++(:)[a-zA-Z0-9]+)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.section.embedded.dsp</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>meta.tag.block.dsp</string>
+				</dict>
+			</dict>
+			<!-- then target the closers -->
+			<key>end</key>
+			<string>(&gt;)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.section.embedded.dsp</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>meta.tag.block.dsp</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<!-- target the substrings separately -->
+				<dict>
+					<key>match</key>
+					<string>([""'])(?:(?=(\\?))\2.)*?\1</string>
+					<key>name</key>
+					<string>string</string>
+				</dict>
+				<!-- target the equals separately -->
+				<dict>
+					<key>match</key>
+					<string>([=])</string>
+					<key>name</key>
+					<string>constant.other.color</string>
+				</dict>
+			</array>
+		</dict>
+
 		<dict>
 			<key>begin</key>
 			<string>(&lt;%[!=]?)|(&lt;jsp:scriptlet&gt;|&lt;jsp:expression&gt;|&lt;jsp:declaration&gt;)</string>
